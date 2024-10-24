@@ -32,6 +32,9 @@ fi
 if [ "$use_ovn_rpm" = "yes" ]; then
     ls ovn*.rpm > /dev/null || exit 1
     dnf install -y /*.rpm
+elif [ "$user_ovn_debs" = "yes" ]; then 
+    ls ovn*.deb > /dev/null || exit 1
+    apt install -y /*.deb
 else
     mkdir -p /root/ovsdb-etcd/schemas
 
@@ -90,7 +93,7 @@ popd
 dnf autoremove -y || apt autoremove -y
 
 # Clean all object files
-if [ "$use_ovn_rpm" = "no" ]; then
+if [ "$use_ovn_rpm" = "no" ] && [ "$use_ovn_debs" = "no" ]; then
     cd /ovs
     make distclean
     cd /ovn
