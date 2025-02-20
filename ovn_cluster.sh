@@ -429,10 +429,10 @@ function provision-db-file() {
     local src=$2
 
     for name in "${CENTRAL_NAMES[@]}"; do
-        ${RUNC_CMD} cp ${src} ${name}-1:/etc/ovn/ovn${db}_db.db
+        ${RUNC_CMD} cp ${src} ${name}-1:/var/lib/ovn/ovn${db}_db.db
         if [ "$OVN_DB_CLUSTER" = "yes" ]; then
-            ${RUNC_CMD} cp ${src} ${name}-2:/etc/ovn/ovn${db}_db.db
-            ${RUNC_CMD} cp ${src} ${name}-3:/etc/ovn/ovn${db}_db.db
+            ${RUNC_CMD} cp ${src} ${name}-2:/var/lib/ovn/ovn${db}_db.db
+            ${RUNC_CMD} cp ${src} ${name}-3:/var/lib/ovn/ovn${db}_db.db
         fi
     done
 }
