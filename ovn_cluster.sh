@@ -49,6 +49,8 @@ IP_START=${IP_START:-170.168.0.2}
 
 OVN_DB_CLUSTER="${OVN_DB_CLUSTER:-no}"
 OVN_MONITOR_ALL="${OVN_MONITOR_ALL:-no}"
+OVN_NB_ELECTION_TIMER="${OVN_NB_ELECTION_TIMER:-60000}"
+OVN_SB_ELECTION_TIMER="${OVN_SB_ELECTION_TIMER:-60000}"
 
 RELAY_COUNT=${RELAY_COUNT:-0}
 RELAY_NAMES=( )
@@ -463,7 +465,7 @@ function start-db-cluster() {
     --db-nb-cluster-local-proto=${REMOTE_PROT} \
     --db-sb-cluster-local-addr=${central_1_ip} --db-sb-cluster-local-proto=${REMOTE_PROT} \
     --ovn-nb-db-ssl-key=/data/${name}/ovnnb-privkey.pem \
-    $SSL_ARGS start_ovsdb
+    $SSL_ARGS --db-nb-election-timer=${OVN_NB_ELECTION_TIMER} --db-sb-election-timer=${OVN_SB_ELECTION_TIMER} start_ovsdb
 
     ${RUNC_CMD} exec ${name}-2 ${OVNCTL_PATH} --db-nb-addr=${central_2_ip}  \
     --db-sb-addr=${central_2_ip} \
